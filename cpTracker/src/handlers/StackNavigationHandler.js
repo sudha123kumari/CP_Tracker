@@ -24,7 +24,7 @@ export default function StackNavigationHandler() {
          <Stack.Screen
           name="Platform"
           component={PlatformPageScreen}
-          options={ ({ route }) => ({ title: route.params.name,
+          options={ ({ route }) => ({ title: route.params.data.title,
             headerShown: true,
             headerTintColor:'white',
             headerStyle:{

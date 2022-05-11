@@ -8,6 +8,10 @@ export default StyleSheet.create({
     width: device.width,
     height: device.height + 35,
   },
+  center:{
+    flex:1,
+    justifyContent:"center"
+  },
   cardImageBackground:{
     width: 100,
     height: 100,
