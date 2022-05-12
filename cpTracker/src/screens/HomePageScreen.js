@@ -10,9 +10,6 @@ import {
   TextInput,
   FlatList
 } from "react-native";
-import { KeyboardAvoidingScrollView } from "react-native-keyboard-avoiding-scroll-view";
-import { Icon } from "react-native-elements";
-import { Input } from "react-native-elements";
 import Styles from '../../assets/cs/Styles';
 import Card from '../components/Card';
 const device = Dimensions.get("window");
@@ -93,27 +90,16 @@ export default class LandingScreen extends Component {
     //          onPress={() => navigate('Platform', { data: item})}
     //    /> 
        <Card data={item} navigation={this.props.navigation} />
-);
-// renderItem = ({ item }) => (
-// <Item item={item} />
-// );
-
-
-  
+);  
   render() {
     return (
-      <SafeAreaView style={{ flex: 1, backgroundColor: "#141420" }}>
-        <KeyboardAvoidingScrollView>
-             {/* <View style={Styles.layout}> */}
-              
+      <SafeAreaView style={{ flex: 1, backgroundColor: "#141420" }}>    
              <FlatList
               data={this.state.DATA}
                renderItem={this.renderItem}
                keyExtractor={item => item.id}
                 horizontal={false}
              />
-             {/* </View> */}
-        </KeyboardAvoidingScrollView>
       </SafeAreaView>
     );
   }

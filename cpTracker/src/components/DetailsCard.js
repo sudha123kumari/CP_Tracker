@@ -11,12 +11,8 @@ import {
   Linking,
   Alert,
 } from "react-native";
-import { KeyboardAvoidingScrollView } from "react-native-keyboard-avoiding-scroll-view";
 import moment from 'moment';
-import { Icon } from "react-native-elements";
-import { Input } from "react-native-elements";
 import Styles from '../../assets/cs/Styles';
-const device = Dimensions.get("window");
 export default class DetailCard extends Component {
     state={
       name:this.props.data.name,
@@ -25,11 +21,28 @@ export default class DetailCard extends Component {
       endDate:moment.utc(moment.utc(moment.utc().format(this.props.data.end_time)).toDate()).format("MMM Do YY"),
       startTime:moment.utc(moment.utc(moment.utc().format(this.props.data.start_time)).toDate()).format("LT"),
       endTime:moment.utc(moment.utc(moment.utc().format(this.props.data.end_time)).toDate()).format("LT"),
-      duration:parseInt(this.props.data.duration)/3600,
-      countDown:'',
+      duration:Math.floor(parseInt(this.props.data.duration)/3600),
       withinAday:this.props.data.in_24_hours,
+      countDownTime: moment.utc(moment.utc().format(this.props.data.start_time)).toDate().getTime(),
+      countDownDisplay:'',
     }
   
+    componentDidMount=()=>{
+       var eventTime= this.state.countDownTime; // Timestamp - Sun, 21 Apr 2013 13:00:00 GMT
+       var currentTime =  moment.utc().toDate().getTime(); // Timestamp - Sun, 21 Apr 2013 12:30:00 GMT
+       var diffTime = eventTime - currentTime;
+       var duration = moment.duration(diffTime);
+       const interval = setInterval(()=>{
+         duration = moment.duration(duration -1000, 'milliseconds');
+         this.setState({
+           countDownDisplay: `${ duration.years()}Y:
+            ${duration.months()}M: :${ duration.days()}D : 
+            ${duration.hours() }H :  ${duration.minutes()}Min : ${ duration.seconds()}S`
+          })
+       },1000);
+      return () => clearInterval(interval);
+    }
+
   
     handlePress = (async () => {
       const supported = await Linking.canOpenURL(this.state.url);
@@ -39,9 +52,8 @@ export default class DetailCard extends Component {
         Alert.alert(`Don't know how to open this URL: ${this.state.url}`);
       }
     });  
-  render() {
-    const { navigate } = this.props.navigation;
 
+  render() {
     return ( 
       <View style={[Styles.card,Styles.flexColumn,Styles.DetailCardContainer,{backgroundColor:this.props.color}]}>
            <Text style={Styles.contentHeader}>{this.state.name}</Text>
@@ -71,20 +83,16 @@ export default class DetailCard extends Component {
            </View>
            <View style={[Styles.contentView]}>
                <Text style={[Styles.contentText,Styles.contentBoldText]}>CountDown</Text>
-               <Text style={[Styles.contentText]}>{this.state.countDown}</Text>
+               <Text style={[Styles.contentText]}>{this.state.countDownDisplay}</Text>
            </View>
            <View style={[Styles.contentView]}>
                <Text style={[Styles.contentText,Styles.contentBoldText]}>Status</Text>
                <Text style={[Styles.contentText]}>{this.props.status}</Text>
            </View>
- 
            <TouchableOpacity  style={Styles.btn2} onPress={()=>{this.handlePress()}}>
               <Text style={[Styles.btn2Text]}>VISIT</Text>
            </TouchableOpacity>
-          
         </View>
-           
-          
              );
   }
 }

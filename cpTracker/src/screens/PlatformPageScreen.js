@@ -4,19 +4,13 @@ import {
   Text,
   View,
   SafeAreaView,
-  ImageBackground,
   Dimensions,
   TouchableOpacity,
-  TextInput,
   ActivityIndicator,
   FlatList,
-  Linking,
-  Alert
 } from "react-native";
 import { KeyboardAvoidingScrollView } from "react-native-keyboard-avoiding-scroll-view";
 import moment from 'moment';
-import { Icon } from "react-native-elements";
-import { Input } from "react-native-elements";
 import Styles from '../../assets/cs/Styles';
 import DetailCard from '../components/DetailsCard';
 const device = Dimensions.get("window");
@@ -41,7 +35,6 @@ export default class PlatformPageScreen extends Component {
       method: 'get',
       url: `${baseUrl}/${this.props.route.params.data.name}`,
     }).then((response) => {
-      // console.log(response.data);
       this.setState({
         contests:response.data
       })
@@ -52,9 +45,6 @@ export default class PlatformPageScreen extends Component {
     var now = moment().format();
     var stime = moment.utc().format(item.start_time);
     var etime = moment.utc().format(item.end_time);
-    // console.log(stime);
-    // console.log(etime);
-    // console.log(now); 
     var status="";
      if(now< stime){
      status="UPCOMING";
@@ -65,43 +55,35 @@ export default class PlatformPageScreen extends Component {
     else {
      status="RUNNING";
     }
-    // console.log(this.state.type)
-    // console.log(status);
-    // console.log(this.state.type===status);
-    
     return (
       (this.state.type==='all' ||
       this.state.type === status) && <DetailCard navigation={this.props.navigation} type={this.state.type} status={status} color={this.state.color} data={item}/>    
     );
-    
-       
-        
-        
-       
-        };
+  };
   render() {
-    return (    <SafeAreaView style={{ flex: 1, backgroundColor: "#141420", }}>
-                  { this.state.loading ? 
-                  <View style={Styles.center}>
-                    <ActivityIndicator size='large' color="white" /> 
-                  </View>
+    return (<SafeAreaView style={{ flex: 1, backgroundColor: "#141420", }}>
+               { this.state.loading
+                  ? 
+                    <View style={Styles.center}> <ActivityIndicator size='large' color="white" /> </View>
                   :
                     <KeyboardAvoidingScrollView>
                     <View style={Styles.flexRow}>
                         <TouchableOpacity style={[Styles.flexRow,Styles.timeHeader,Styles.futureHeader]}
                          onPress={()=>{ this.helper('#BAE08A','UPCOMING');}}
                         >
-                            <Text style={Styles.textName}>FUTURE</Text>
+                          <Text style={Styles.textName}>FUTURE</Text>
                         </TouchableOpacity>
+
                         <TouchableOpacity  style={[Styles.flexRow,Styles.timeHeader,Styles.pastHeader]}
                          onPress={()=>{ this.helper('#EC8686','EXPIRED');}}
                           >
                             <Text style={Styles.textName}>PAST</Text>
                         </TouchableOpacity >
+
                         <TouchableOpacity  style={[Styles.flexRow,Styles.timeHeader,Styles.presentHeader]}
                          onPress={()=>{ this.helper('#53AFD6','RUNNING');}}
                         >
-                            <Text style={Styles.textName}>LIVE</Text>
+                          <Text style={Styles.textName}>LIVE</Text>
                         </TouchableOpacity >
                     </View>
                     <FlatList
@@ -109,14 +91,10 @@ export default class PlatformPageScreen extends Component {
                        renderItem={this.renderItem}
                        keyExtractor={item => item.title}
                        horizontal={false}
-             />
-           
-                  </KeyboardAvoidingScrollView>
-                   
-                  }
-                  
-                 
-                </SafeAreaView>
+                    />
+                 </KeyboardAvoidingScrollView>
+                 }
+              </SafeAreaView>
           
              );
   }
