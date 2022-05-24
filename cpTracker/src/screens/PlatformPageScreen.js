@@ -62,10 +62,7 @@ export default class PlatformPageScreen extends Component {
   };
   render() {
     return (<SafeAreaView style={{ flex: 1, backgroundColor: "#141420", }}>
-               { this.state.loading
-                  ? 
-                    <View style={Styles.center}> <ActivityIndicator size='large' color="white" /> </View>
-                  :
+               
                     <KeyboardAvoidingScrollView>
                     <View style={Styles.flexRow}>
                         <TouchableOpacity style={[Styles.flexRow,Styles.timeHeader,Styles.futureHeader]}
@@ -93,7 +90,7 @@ export default class PlatformPageScreen extends Component {
                        horizontal={false}
                     />
                  </KeyboardAvoidingScrollView>
-                 }
+                 
               </SafeAreaView>
           
              );

@@ -12,7 +12,7 @@ import Styles from '../../assets/cs/Styles';
 import HomePageScreen from '../screens/HomePageScreen';
 import Owner from '../screens/OwnerScreen';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
-import {faLocationArrow,faHeart } from '@fortawesome/free-solid-svg-icons';
+import {faLocationArrow,faHeart,faDotCircle } from '@fortawesome/free-solid-svg-icons';
 import { color } from 'react-native-reanimated';
 
 const DATA = [
@@ -85,7 +85,7 @@ function CustomDrawerContent(props) {
                label={item.title}
                labelStyle={{color:"#10414f"}}
                icon = {({focused}) => (
-                    <FontAwesomeIcon icon={ faLocationArrow } size={30} style={{color:focused ? "blue" : "purple"}}  />                  
+                    <FontAwesomeIcon icon={ faDotCircle } size={20} style={{color:focused ? "blue" : "purple"}}  />                  
                  )}
                  onPress={() => navigate('Platform', { data: item})}
            /> 

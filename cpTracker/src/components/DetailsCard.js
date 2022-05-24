@@ -25,23 +25,64 @@ export default class DetailCard extends Component {
       withinAday:this.props.data.in_24_hours,
       countDownTime: moment.utc(moment.utc().format(this.props.data.start_time)).toDate().getTime(),
       countDownDisplay:'',
+      showRemind:false,
     }
   
     componentDidMount=()=>{
-       var eventTime= this.state.countDownTime; // Timestamp - Sun, 21 Apr 2013 13:00:00 GMT
-       var currentTime =  moment.utc().toDate().getTime(); // Timestamp - Sun, 21 Apr 2013 12:30:00 GMT
-       var diffTime = eventTime - currentTime;
-       var duration = moment.duration(diffTime);
-       const interval = setInterval(()=>{
-         duration = moment.duration(duration -1000, 'milliseconds');
+      var eventTime= this.state.countDownTime; 
+      var currentTime =  moment.utc().toDate().getTime(); 
+      var diffTime = eventTime - currentTime;
+     if(diffTime>0){
+       this.setState({showRemind:true});
+     }
+      var duration = moment.duration(diffTime);
+      const interval = setInterval(()=>{
+        duration = moment.duration(duration -1000, 'milliseconds');
+        var year= duration.years();
+        var months = duration.months();
+        var days = duration.days();
+        var hours = duration.hours();
+        var minutes = duration.minutes();
+        var seconds = duration.seconds();
+        if(year>0){
          this.setState({
-           countDownDisplay: `${ duration.years()}Y:
-            ${duration.months()}M: :${ duration.days()}D : 
-            ${duration.hours() }H :  ${duration.minutes()}Min : ${ duration.seconds()}S`
+           countDownDisplay: `${ duration.years()}Y : ${duration.months()}M : ${ duration.days()}D : ${duration.hours() }H : ${duration.minutes()}Min : ${ duration.seconds()}S`
           })
-       },1000);
-      return () => clearInterval(interval);
-    }
+        }
+        else if(months>0){
+         this.setState({
+           countDownDisplay: `${duration.months()}M : ${ duration.days()}D : ${duration.hours() }H : ${duration.minutes()}Min : ${ duration.seconds()}S`
+          })
+        }
+        else if(days>0){
+         this.setState({
+           countDownDisplay: `${ duration.days()}D : ${duration.hours() }H : ${duration.minutes()}Min : ${ duration.seconds()}S`
+          })
+        }
+        else if(hours>0){
+         this.setState({
+           countDownDisplay: `${duration.hours() }H : ${duration.minutes()}Min : ${ duration.seconds()}S`
+          })
+        }
+        else if(minutes>0){
+         this.setState({
+           countDownDisplay: `${duration.minutes()}Min : ${ duration.seconds()}S`
+          })
+        }
+        else if(seconds>0){
+         this.setState({
+           countDownDisplay: `${ duration.seconds()}S`
+          })
+        }
+        else{
+         this.setState({
+           countDownDisplay: 'In Progess'
+          })
+        }
+      
+      },1000);
+     return () => clearInterval(interval);
+   }
 
   
     handlePress = (async () => {
@@ -89,6 +130,10 @@ export default class DetailCard extends Component {
                <Text style={[Styles.contentText,Styles.contentBoldText]}>Status</Text>
                <Text style={[Styles.contentText]}>{this.props.status}</Text>
            </View>
+           {this.state.showRemind &&    <TouchableOpacity  style={[Styles.btn2,{backgroundColor:'#336bff',marginTop:20}]} onPress={()=>{this.addReminder()}}>
+              <Text style={[Styles.btn2Text]}>REMIND ME</Text>
+           </TouchableOpacity> }
+        
            <TouchableOpacity  style={Styles.btn2} onPress={()=>{this.handlePress()}}>
               <Text style={[Styles.btn2Text]}>VISIT</Text>
            </TouchableOpacity>
