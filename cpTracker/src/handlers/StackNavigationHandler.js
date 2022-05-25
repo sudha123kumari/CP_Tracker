@@ -2,6 +2,9 @@ import * as React from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import HomePageScreen from '../screens/HomePageScreen';
+import SignInScreen from '../screens/SignInScreen';
+import RegisterScreen from '../screens/RegisterScreen';
+
 import DrawerNavigationHandler from "./DrawerNavigationHandler";
 import PlatformPageScreen from "../screens/PlatformPageScreen";
 import Card from '../components/Card';
@@ -12,6 +15,23 @@ export default function StackNavigationHandler() {
   return (
     <NavigationContainer>
       <Stack.Navigator>
+      <Stack.Screen
+          name="SignIn"
+          component={SignInScreen}
+          options={{
+            headerShown: false,
+          
+          }}
+        />
+        <Stack.Screen
+          name="Register"
+          component={RegisterScreen}
+          options={{
+            headerShown: false,
+          
+          }}
+        />
+          
         <Stack.Screen
           name="Drawer"
           component={DrawerNavigationHandler}
@@ -20,7 +40,14 @@ export default function StackNavigationHandler() {
           
           }}
         />
-
+          <Stack.Screen
+          name="Home"
+          component={HomePageScreen}
+          options={{
+            headerShown: false,
+          
+          }}
+        />
          <Stack.Screen
           name="Platform"
           component={PlatformPageScreen}

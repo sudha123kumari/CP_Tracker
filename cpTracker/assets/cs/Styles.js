@@ -101,7 +101,7 @@ layout:{
     borderRadius:2,
     paddingHorizontal:10,
     marginVertical:10,
-    marginTop:25,
+    // marginTop:25,
     paddingHorizontal:25,
     paddingVertical:8
   },
@@ -160,4 +160,36 @@ layout:{
      fontWeight:'bold',
      fontSize:10,
   },
+  input:{
+    fontSize:15,
+    marginHorizontal:5,
+    color:'white'
+    
+  },
+  inputContainerStyle:{
+    marginBottom:0,
+    backgroundColor:'#3f4584',
+    borderRadius:10,
+    paddingHorizontal:10,
+    color:'white'
+  },
+  Headers:{
+    color:"#9CD66E",
+    alignSelf:"center",
+    fontSize:30,
+    fontWeight:'bold',
+    marginVertical:50
+  },
+  Headers2:{
+    color:"blue",
+    alignSelf:"center",
+    marginBottom:20,
+    fontSize:20
+  },
+  Card2:{
+   backgroundColor:'white',
+   marginVertical:20,
+   borderRadius:10,
+   paddingVertical:50,
+  }
 })

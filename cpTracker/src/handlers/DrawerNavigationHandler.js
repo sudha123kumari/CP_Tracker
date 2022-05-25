@@ -10,9 +10,11 @@ import { StyleSheet, Text, View,SafeAreaView,Image,ImageBackground,FlatList } fr
 import Styles from '../../assets/cs/Styles';
 
 import HomePageScreen from '../screens/HomePageScreen';
+
 import Owner from '../screens/OwnerScreen';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
-import {faLocationArrow,faHeart,faDotCircle } from '@fortawesome/free-solid-svg-icons';
+import {faLocationArrow,faHeart,faDotCircle, faSignOut, faUser } from '@fortawesome/free-solid-svg-icons';
+import UserScreen from '../screens/ProfileScreen';
 import { color } from 'react-native-reanimated';
 
 const DATA = [
@@ -85,7 +87,7 @@ function CustomDrawerContent(props) {
                label={item.title}
                labelStyle={{color:"#10414f"}}
                icon = {({focused}) => (
-                    <FontAwesomeIcon icon={ faDotCircle } size={20} style={{color:focused ? "blue" : "purple"}}  />                  
+                    <FontAwesomeIcon icon={ faDotCircle } size={20} style={{color:"#9CD66E"}}  />                  
                  )}
                  onPress={() => navigate('Platform', { data: item})}
            /> 
@@ -123,13 +125,21 @@ function CustomDrawerContent(props) {
              />
             <View style = {Styles.lineStyle} />
             <DrawerItem
+               label="Sign Out"
+               labelStyle={{color:"#10414f"}}
+               icon = {({focused, size}) => (
+                <FontAwesomeIcon icon={ faSignOut} size={25}  color={focused ? 'pink' : 'red'} />             
+                 )}
+                 onPress={() => navigate('Owner')}
+          />
+            <DrawerItem
                label="About"
                labelStyle={{color:"#10414f"}}
                icon = {({focused, size}) => (
                 <FontAwesomeIcon icon={ faHeart} size={30}  color={focused ? 'pink' : 'red'} />             
                  )}
                  onPress={() => navigate('Owner')}
-        v  />
+         />
           </SafeAreaView>
       
     </DrawerContentScrollView>
@@ -140,7 +150,7 @@ const Drawer = createDrawerNavigator();
 
 function MyDrawer() {
   return (
-    <Drawer.Navigator
+    <Drawer.Navigator 
       drawerContent={(props) => <CustomDrawerContent {...props} />}
       screenOptions={{
         drawerStyle: {
@@ -163,6 +173,18 @@ function MyDrawer() {
       },
       drawerIcon: ({focused, size}) => (
         <FontAwesomeIcon icon={ faLocationArrow } size={30}  color={focused ? 'blue' : 'purple'} />             
+     ),
+      
+    }}
+       />  
+       <Drawer.Screen name="Profile" component={UserScreen}  options={{ headerShown: true,
+      title:"ProfileScreen", 
+      headerTintColor:'white',
+      headerStyle:{
+        backgroundColor:"#273238",
+      },
+      drawerIcon: ({focused, size}) => (
+        <FontAwesomeIcon icon={ faUser } size={25}  color={focused ? 'blue' : 'purple'} />             
      ),
       
     }}
